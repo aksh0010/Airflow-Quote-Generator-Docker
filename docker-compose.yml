@@ -1,0 +1,9 @@
+version: '3'
+services:
+  airflowwindowsdocker:
+    image: airflowwindowsdocker:aksh2
+    volumes:
+      - ./airflow:/opt/airflow
+    ports:
+      - "8080:8080" # webserver port
+    command: airflow standalone
