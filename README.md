@@ -1,33 +1,27 @@
-Apache airflow on Windows docker using python
+# Airflow Docker Application
 
-# Welcome DAG
+This application uses Apache Airflow to schedule and monitor workflows. It is containerized using Docker for easy deployment and scaling.
 
-This is an Apache Airflow Directed Acyclic Graph (DAG) named `welcome_dag`. It consists of three tasks that print a welcome message, the current date, and a random quote.
+## Application Structure
 
-## Dependencies
+The application consists of a single Airflow DAG (Directed Acyclic Graph) that performs the following tasks:
 
-- Apache Airflow
-- Python
-- requests
+1. Print a welcome message.
+2. Print the current date.
+3. Fetch and print a random quote from the Quotable API.
 
-## Tasks
+The tasks are executed in the order specified above.
 
-1. `print_welcome`: This task prints a welcome message to the console.
-2. `print_date`: This task prints the current date to the console.
-3. `print_random_quote`: This task fetches a random quote from the Quotable API and prints it to the console.
+## Docker Configuration
 
-## Execution
+The Dockerfile uses the `apache/airflow:latest` image as a base. It updates the package lists for upgrades and new package installations. Then, it installs git and cleans up the package lists.
 
-The tasks are executed in the following order: `print_welcome` -> `print_date` -> `print_random_quote`.
-
-## Schedule
-
-The DAG is scheduled to run daily at 23:00.
+The Docker Compose file sets up a service named `airflowwindowsdocker` that uses the `airflowwindowsdocker:aksh2` image. It mounts the `./airflow` directory to `/opt/airflow` in the container. The webserver is exposed on port 8080.
 
 ## How to Run
 
-To run this DAG, you need to have Apache Airflow installed and configured on your machine. Once you have Airflow set up, you can place this Python script in the `dags` directory of your Airflow installation. Airflow will automatically pick up the DAG and you can trigger it manually or wait for the next scheduled run at 23:00.
+1. Build the Docker image: `docker build -t airflowwindowsdocker:aksh2 .`
+2. Start the service: `docker-compose up`
 
-## Note
+After starting the service, you can access the Airflow webserver at `http://localhost:8080`.
 
-This DAG uses the `requests` library to fetch a random quote from an API. Make sure you have the `requests` library installed in your Python environment where Airflow is running.
